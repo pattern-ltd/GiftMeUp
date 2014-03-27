@@ -13,3 +13,9 @@ results
 
 npm-debug.log
 node_modules
+
+www/bower_components
+
+*/.idea/workspace.xml
+*/.idea/tasks.xml
+*/.idea/vcs.xml
