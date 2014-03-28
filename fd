@@ -1,0 +1,15 @@
+[1mdiff --git a/.idea/runConfigurations/app_js.xml b/.idea/runConfigurations/app_js.xml[m
+[1mindex 762b2a5..7370710 100644[m
+[1m--- a/.idea/runConfigurations/app_js.xml[m
+[1m+++ b/.idea/runConfigurations/app_js.xml[m
+[36m@@ -2,7 +2,9 @@[m
+   <configuration default="false" name="app.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="D:/Program Files/nodejs/node" path-to-js-file="app.js" working-dir="$PROJECT_DIR$">[m
+     <browser start="false" url="http://localhost:3000" with-js-debugger="false" />[m
+     <RunnerSettings RunnerId="NodeJS.debug" />[m
+[32m+[m[32m    <RunnerSettings RunnerId="NodeJS.run" />[m
+     <ConfigurationWrapper RunnerId="NodeJS.debug" />[m
+[32m+[m[32m    <ConfigurationWrapper RunnerId="NodeJS.run" />[m
+     <method />[m
+   </configuration>[m
+ </component>[m
+\ No newline at end of file[m
