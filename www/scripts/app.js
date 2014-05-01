@@ -1,6 +1,6 @@
-define(["angular", "controllers/loader", "ngRoute", "uiRouter"],
+define(["angular", "controllers/loader", "services/loader", "ngRoute", "uiRouter"],
     function (angular) {
-     var module = angular.module('giftMeUp', ['giftMeUp.controllers', 'ngRoute', 'ui.router'])
+     var module = angular.module('giftMeUp', ['giftMeUp.controllers', 'giftMeUp.services', 'ngRoute', 'ui.router'])
       .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
              $urlRouterProvider.otherwise("/");
 

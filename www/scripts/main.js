@@ -7,7 +7,8 @@ require.config({
         ngCookies: "../bower_components/angular-cookies/angular-cookies",
         jquery: "../bower_components/jquery/dist/jquery",
         bootstrap: "../bower_components/bootstrap/dist/js/bootstrap",
-        domReady: "../bower_components/requirejs-domready/domReady"
+        domReady: "../bower_components/requirejs-domready/domReady",
+        facebook: "//connect.facebook.net/en_US/all"
     },
     shim: {
         angular: {
@@ -25,6 +26,10 @@ require.config({
         },
         uiRouter: {
             deps: ["angular"]
+        },
+
+        facebook: {
+            exports: "FB"
         }
     }
 });

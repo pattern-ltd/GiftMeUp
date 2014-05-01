@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var graph = require('fbgraph');
 
 var app = express();
 
@@ -36,15 +37,32 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get("/api/amazon/test", function(req, res){
+app.get("/api/amazon/test", function (req, res) {
     var service = require("./scripts/amazonService");
-    var client =  service.initialize("key", "secretKey", "associateTag");
-    client.searchItems({SearchIndex: "Books", Keywords: "Javascript"}, function(err, result){
+    var client = service.initialize("key", "secretKey", "associateTag");
+    client.searchItems({ SearchIndex: "Books", Keywords: "Javascript" }, function (err, result) {
         var body = err || result;
 
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(body));
+        return;
     });
+
+    return;
+});
+
+app.get("/api/facebook/friends", function (req, res) {
+    var token = req.query.token;
+
+    var query = "SELECT name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me())";
+
+    graph.fql(query, { access_token: token }, function (err, result) {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(result.data));
+        return;
+    });
+
+    return;
 });
 
 http.createServer(app).listen(app.get('port'), function(){
