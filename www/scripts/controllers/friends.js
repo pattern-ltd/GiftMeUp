@@ -20,6 +20,17 @@ define(["controllers/module"], function (controllers) {
                 .then(function (result) {
                     $scope.friends = result;
                 });
+            },
+
+            $scope.searchFriends = function () {
+                var searchWords = $scope.searchFriendsKeywords;
+
+                var searchString = searchWords.replace(/\s/, '+');
+
+                facebookService.search(searchString, "user")
+                .then(function(result){
+                    $scope.friends = result;
+                });
             }
         } ]);
 });

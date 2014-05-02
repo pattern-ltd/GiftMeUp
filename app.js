@@ -54,7 +54,7 @@ app.get("/api/amazon/test", function (req, res) {
 app.get("/api/facebook/friends", function (req, res) {
     var token = req.query.token;
 
-    var query = "SELECT name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me())";
+    var query = "SELECT name, id FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me())";
 
     graph.fql(query, { access_token: token }, function (err, result) {
         res.setHeader('Content-Type', 'application/json');
@@ -63,6 +63,18 @@ app.get("/api/facebook/friends", function (req, res) {
     });
 
     return;
+});
+
+app.get('/api/facebook/search', function (req, res) {
+    var token = req.query.token;
+    var query = req.query.query;
+    var type = req.query.type;
+
+    graph.search({q: query, type: type, access_token: token, fields: "id,name,picture"}, function(err, result){
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(result.data));
+        return;
+    });
 });
 
 http.createServer(app).listen(app.get('port'), function(){

@@ -50,7 +50,7 @@ define(["facebook", "services/module"], function (FB, services) {
                     // The person cancelled the login dialog
                     delay.reject(response);
                 }
-            }, { scope: 'user_friends' });
+            }, { scope: 'user_friends,friends_likes,user_likes' });
 
             return delay.promise;
         },
@@ -69,6 +69,30 @@ define(["facebook", "services/module"], function (FB, services) {
                 self.$http({ method: "get",
                     url: "api/facebook/friends",
                     params: {
+                        token: result.authResponse.accessToken
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    delay.resolve(data);
+                })
+                .error(function (data, status, headers, config) {
+                    delay.reject(data);
+                });
+            });
+
+            return delay.promise;
+        },
+
+        search: function (query, type) {
+            var self = this;
+            var delay = this.$q.defer();
+
+            var status = FB.getLoginStatus(function (result) {
+                self.$http({ method: "get",
+                    url: "api/facebook/search",
+                    params: {
+                        query: query,
+                        type: type,
                         token: result.authResponse.accessToken
                     }
                 })
