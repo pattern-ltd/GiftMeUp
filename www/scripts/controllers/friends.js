@@ -1,6 +1,6 @@
 define(["controllers/module"], function (controllers) {
-    controllers.controller("FriendsCtrl", ["$scope", "FacebookService",
-        function ($scope, facebookService) {
+    controllers.controller("FriendsCtrl", ["$scope", "$state", "FacebookService",
+        function ($scope, $state, facebookService) {
             $scope.login = function () {
                 facebookService.login()
                     .then(function () {
@@ -28,9 +28,13 @@ define(["controllers/module"], function (controllers) {
                 var searchString = searchWords.replace(/\s/, '+');
 
                 facebookService.search(searchString, "user")
-                .then(function(result){
+                .then(function (result) {
                     $scope.friends = result;
                 });
+            }
+
+            $scope.getFriendSuggestions = function (friend) {
+                $state.go("suggestions", {id: friend.id});
             }
         } ]);
 });

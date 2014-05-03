@@ -9,8 +9,10 @@
 
     <ul>
         <li ng-repeat="friend in friends">
-            <img src="{{friend.picture.data.url}}" alt="{{friend.name}}"/>
-            <span>{{friend.name}}</span>
+            <a href="#" ng-click="getFriendSuggestions(friend)">
+                <img src="{{friend.picture.data.url}}" alt="{{friend.name}}"/>
+                <span>{{friend.name}}</span>
+            </a>
         </li>
     </ul>
     

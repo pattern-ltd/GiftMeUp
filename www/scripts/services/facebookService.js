@@ -105,6 +105,29 @@ define(["facebook", "services/module"], function (FB, services) {
             });
 
             return delay.promise;
+        },
+
+        suggest: function (userId) {
+            var self = this;
+            var delay = this.$q.defer();
+
+            var status = FB.getLoginStatus(function (result) {
+                self.$http({ method: "get",
+                    url: "/api/suggest",
+                    params: {
+                        userId: userId,
+                        token: result.authResponse.accessToken
+                    }
+                })
+                .success(function (data, status, headers, config) {
+                    delay.resolve(data);
+                })
+                .error(function (data, status, headers, config) {
+                    delay.reject(data);
+                });
+            });
+
+            return delay.promise;
         }
     }
 });

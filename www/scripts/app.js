@@ -10,9 +10,10 @@ define(["angular", "controllers/loader", "services/loader", "ngRoute", "uiRouter
                      templateUrl: "views/friends.html",
                      controller: "FriendsCtrl"
                  })
-                 .state("login", {
-                     url: "/login",
-                     template: "<h1>Login page</h1>"
+                 .state("suggestions", {
+                     url: "/suggest/:id",
+                     templateUrl: "views/suggestions.html",
+                     controller: "SuggestionsCtrl"
                  });
 
              // use the HTML5 History API
