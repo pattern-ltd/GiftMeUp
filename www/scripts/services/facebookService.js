@@ -107,7 +107,7 @@ define(["facebook", "services/module"], function (FB, services) {
             return delay.promise;
         },
 
-        suggest: function (userId) {
+        suggest: function (userId, interests) {
             var self = this;
             var delay = this.$q.defer();
 
@@ -116,6 +116,7 @@ define(["facebook", "services/module"], function (FB, services) {
                     url: "/api/suggest",
                     params: {
                         userId: userId,
+                        interests: interests,
                         token: result.authResponse.accessToken
                     }
                 })
@@ -126,6 +127,26 @@ define(["facebook", "services/module"], function (FB, services) {
                     delay.reject(data);
                 });
             });
+
+            return delay.promise;
+        },
+
+        similar: function (itemId) {
+            var self = this;
+            var delay = this.$q.defer();
+
+            self.$http({ method: "get",
+                url: "/api/similar",
+                params: {
+                    itemId: itemId
+                }
+            })
+                .success(function (data, status, headers, config) {
+                    delay.resolve(data);
+                })
+                .error(function (data, status, headers, config) {
+                    delay.reject(data);
+                });
 
             return delay.promise;
         }

@@ -3,10 +3,18 @@ define(["controllers/module"], function (controllers) {
         function ($scope, $stateParams, facebookService) {
             $scope.suggest = function () {
                 var id = $stateParams.id;
+                var interests = $scope.interests;
 
-                facebookService.suggest(id)
-                .then(function(result){
-                    
+                facebookService.suggest(id, interests)
+                .then(function (result) {
+                    $scope.suggestions = result;
+                });
+            }
+
+            $scope.similar = function (item) {
+                facebookService.similar(item.ASIN)
+                .then(function (result) {
+                    $scope.similarItems = result;
                 });
             }
         } ]);

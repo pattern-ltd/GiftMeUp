@@ -9,7 +9,13 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var graph = require('fbgraph');
-var q = require('q');
+var Q = require('q');
+
+var service = require("./scripts/amazonService");
+var client = service.initialize("AKIAI7ALH67LC44E4CRQ", "BlYn/vpyKDWhRduBU27UhH902kW0WpIU4FGdX5ba", "associateTag");
+
+var suggestionsCore = require("./scripts/suggestions");
+var core = suggestionsCore.initialize(client, graph);
 
 var app = express();
 
@@ -79,55 +85,83 @@ app.get('/api/facebook/search', function (req, res) {
 });
 
 app.get('/api/suggest', function (req, res) {
-    //var userId = req.query.userId;
-    var userId = 1303989751;
-    var interest = req.query.interest;
+    var userId = req.query.userId;
+    var interests = encodeURIComponent(req.query.interests);
+    var maxPrice = req.query.maxPrice;
     var token = req.query.token;
 
-    var query = "SELECT name FROM page WHERE page_id IN (SELECT page_id FROM page_fan WHERE uid = " + userId + ")";
+    Q.fcall(function () {
+        var deferred = Q.defer();
+        graph.get(userId + '/likes', {
+            access_token: token
+        },
+          function (err, result) {
+              deferred.resolve(result.data);
+          });
 
-    graph.fql(query, { access_token: token }, function (err, result) {
-        var likes = result.data;
-        var grouped = {
-            categories: [],
-            maxCount: 0
-        };
-
-        for (var i = 0; i < likes.length; i++) {
-            var like = likes[i];
-
-            if (!grouped.categories[like.category]) {
-                grouped.categories[like.category] = [];
-            }
-
-            var group = grouped.categories[like.category];
-            group.push(like);
-
-            if (group.length > grouped.maxCount) {
-                grouped.mostLiked = like.category;
-                grouped.maxCount = group.length;
-            }
+        return deferred.promise;
+    })
+    .then(function (likes) {
+        if (likes.length > 0) {
+            var grouped = core.groupLikesByCategory(likes);
+            return recent = core.recentFromMostLikedCategory(grouped);
+        }
+        else {
+            return null;
+        }
+    })
+    .then(function (recent) {
+        if (recent) {
+            client.searchItems({ SearchIndex: "Blended",
+                Keywords: recent.name,
+                MaximumPrice: maxPrice,
+                ResponseGroup: "Small,Images,EditorialReview"
+            }, function (err, result) {
+                return result.Items;
+            });
+        }
+        else {
+            return [];
         }
 
-        var service = require("./scripts/amazonService");
-        var client = service.initialize("AKIAI7ALH67LC44E4CRQ", "BlYn/vpyKDWhRduBU27UhH902kW0WpIU4FGdX5ba", "associateTag");
-
-        var mostLikedCategory = grouped.categories[grouped.mostLiked];
-        var recent = mostLikedCategory[0];
-        for (var i = 1; i < mostLikedCategory.length; i++) {
-            var current = mostLikedCategory[i];
-            if (new Date(current.created_time) > new Date(recent.created_time)) {
-                recent = current;
-            }
-        }
-
-        client.searchItems({ SearchIndex: "Blended", Keywords: recent.name }, function (err, result) {
+    })
+    .then(function (items) {
+        if (items && items.length > 0) {
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(result));
-            return;
+        }
+
+        client.searchItems({ SearchIndex: "Blended",
+            Keywords: interests,
+            MaximumPrice: maxPrice,
+            ResponseGroup: "Small,Images,EditorialReview"
+        }, function (err, result) {
+            if (result.Items.Item) {
+                var items = result.Items.Item.slice(0, 10);
+            }
+
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(items));
         });
     });
 });
+
+app.get('/api/similar', function (req, res) {
+    var itemId = req.query.itemId;
+
+    client.getSimilarItems({
+        ItemId: itemId,
+        ResponseGroup: "Small,Images,EditorialReview"
+    }, function (err, result) {
+        if (result.Items.Item) {
+            var items = result.Items.Item.slice(0, 10);
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(items));
+    });
+});
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
