@@ -4,8 +4,7 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
+var api = require('./routes/api');
 var http = require('http');
 var path = require('path');
 var graph = require('fbgraph');
@@ -44,125 +43,25 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get("/api/amazon/test", function (req, res) {
-    var service = require("./scripts/amazonService");
-    var client = service.initialize("key", "secretKey", "associateTag");
-    client.searchItems({ SearchIndex: "Books", Keywords: "Javascript" }, function (err, result) {
-        var body = err || result;
+app.get("/api/facebook/friends", api.getFacebookFriends);
 
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(body));
-        return;
-    });
+app.get('/api/facebook/search', api.facebookSearch);
 
-    return;
-});
+app.get('/api/suggest', api.suggest);
 
-app.get("/api/facebook/friends", function (req, res) {
-    var token = req.query.token;
-
-    var query = "SELECT name, uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me())";
-
-    graph.fql(query, { access_token: token }, function (err, result) {
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(result.data));
-        return;
-    });
-
-    return;
-});
-
-app.get('/api/facebook/search', function (req, res) {
-    var token = req.query.token;
-    var query = req.query.query;
-    var type = req.query.type;
-
-    graph.search({q: query, type: type, access_token: token, fields: "id,name,picture"}, function(err, result){
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(result.data));
-        return;
-    });
-});
-
-app.get('/api/suggest', function (req, res) {
-    var userId = req.query.userId;
-    var interests = encodeURIComponent(req.query.interests);
-    var maxPrice = req.query.maxPrice;
-    var token = req.query.token;
-
-    Q.fcall(function () {
-        var deferred = Q.defer();
-        graph.get(userId + '/likes', {
-            access_token: token
-        },
-          function (err, result) {
-              deferred.resolve(result.data);
-          });
-
-        return deferred.promise;
-    })
-    .then(function (likes) {
-        if (likes.length > 0) {
-            var grouped = core.groupLikesByCategory(likes);
-            return recent = core.recentFromMostLikedCategory(grouped);
-        }
-        else {
-            return null;
-        }
-    })
-    .then(function (recent) {
-        if (recent) {
-            client.searchItems({ SearchIndex: "Blended",
-                Keywords: recent.name,
-                MaximumPrice: maxPrice,
-                ResponseGroup: "Small,Images,EditorialReview"
-            }, function (err, result) {
-                return result.Items;
-            });
-        }
-        else {
-            return [];
-        }
-
-    })
-    .then(function (items) {
-        if (items && items.length > 0) {
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(result));
-        }
-
-        client.searchItems({ SearchIndex: "Blended",
-            Keywords: interests,
-            MaximumPrice: maxPrice,
-            ResponseGroup: "Small,Images,EditorialReview"
-        }, function (err, result) {
-            if (result.Items.Item) {
-                var items = result.Items.Item.slice(0, 10);
-            }
-
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(items));
-        });
-    });
-});
-
-app.get('/api/similar', function (req, res) {
-    var itemId = req.query.itemId;
-
-    client.getSimilarItems({
-        ItemId: itemId,
-        ResponseGroup: "Small,Images,EditorialReview"
-    }, function (err, result) {
-        if (result.Items.Item) {
-            var items = result.Items.Item.slice(0, 10);
-        }
-
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(items));
-    });
-});
+app.get('/api/similar', api.similarAmazonItems);
 
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+var io = require('socket.io').listen(server);
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
