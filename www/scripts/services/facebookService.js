@@ -12,7 +12,7 @@ define(["facebook", "services/module"], function (FB, services) {
         });
 
         FB.Event.subscribe('auth.authResponseChange', this.authResponseChangeHandler);
-    }
+    };
     FacebookService.prototype = {
         authResponseChangeHandler: function (response) {
             // Here we specify what we do with the response anytime this event occurs. 
@@ -65,11 +65,12 @@ define(["facebook", "services/module"], function (FB, services) {
             var self = this;
             var delay = this.$q.defer();
 
-            var status = FB.getLoginStatus(function (result) {
+            this.getAccessToken()
+            .then(function (token) {
                 self.$http({ method: "get",
                     url: "api/facebook/friends",
                     params: {
-                        token: result.authResponse.accessToken
+                        token: token
                     }
                 })
                 .success(function (data, status, headers, config) {
@@ -87,13 +88,14 @@ define(["facebook", "services/module"], function (FB, services) {
             var self = this;
             var delay = this.$q.defer();
 
-            var status = FB.getLoginStatus(function (result) {
+            this.getAccessToken()
+            .then(function (token) {
                 self.$http({ method: "get",
                     url: "api/facebook/search",
                     params: {
                         query: query,
                         type: type,
-                        token: result.authResponse.accessToken
+                        token: token
                     }
                 })
                 .success(function (data, status, headers, config) {
@@ -111,13 +113,14 @@ define(["facebook", "services/module"], function (FB, services) {
             var self = this;
             var delay = this.$q.defer();
 
-            var status = FB.getLoginStatus(function (result) {
+            this.getAccessToken()
+            .then(function (token) {
                 self.$http({ method: "get",
                     url: "/api/suggest",
                     params: {
                         userId: userId,
                         interests: interests,
-                        token: result.authResponse.accessToken
+                        token: token
                     }
                 })
                 .success(function (data, status, headers, config) {
@@ -132,11 +135,10 @@ define(["facebook", "services/module"], function (FB, services) {
         },
 
         similar: function (itemId) {
-            var self = this;
             var delay = this.$q.defer();
 
             self.$http({ method: "get",
-                url: "/api/similar",
+                url: "/api/amazon/similar",
                 params: {
                     itemId: itemId
                 }
@@ -149,6 +151,22 @@ define(["facebook", "services/module"], function (FB, services) {
                 });
 
             return delay.promise;
+        },
+
+        getLoginStatus: function () {
+            var delay = this.$q.defer();
+
+            FB.getLoginStatus(function (result) {
+                delay.resolve(result);
+            });
+
+            return delay.promise;
+        },
+
+        getAccessToken: function () {
+            return this.getLoginStatus().then(function (result) {
+                return result.authResponse.accessToken;
+            });
         }
-    }
+    };
 });

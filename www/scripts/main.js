@@ -8,7 +8,8 @@ require.config({
         jquery: "../bower_components/jquery/dist/jquery",
         bootstrap: "../bower_components/bootstrap/dist/js/bootstrap",
         domReady: "../bower_components/requirejs-domready/domReady",
-        facebook: "//connect.facebook.net/en_US/all"
+        facebook: "//connect.facebook.net/en_US/all",
+        io: "/socket.io/socket.io"
     },
     shim: {
         angular: {
@@ -30,6 +31,10 @@ require.config({
 
         facebook: {
             exports: "FB"
+        },
+
+        io: {
+            exports: "io"
         }
     }
 });

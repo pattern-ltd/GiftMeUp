@@ -5,7 +5,6 @@
 
 var express = require('express');
 var api = require('./routes/api');
-var http = require('http');
 var path = require('path');
 var graph = require('fbgraph');
 var Q = require('q');
@@ -15,6 +14,8 @@ var client = service.initialize("AKIAI7ALH67LC44E4CRQ", "BlYn/vpyKDWhRduBU27UhH9
 
 var suggestionsCore = require("./scripts/suggestions");
 var core = suggestionsCore.initialize(client, graph);
+
+var webSocketApi = require('./scripts/webSocketApi');
 
 var app = express();
 
@@ -47,21 +48,20 @@ app.get("/api/facebook/friends", api.getFacebookFriends);
 
 app.get('/api/facebook/search', api.facebookSearch);
 
-app.get('/api/suggest', api.suggest);
+app.get('/api/amazon/similar', api.similarAmazonItems);
 
-app.get('/api/similar', api.similarAmazonItems);
+var http = require('http')
+  , server = http.createServer(app)
+  , io = require('socket.io').listen(server)
 
-
-var server = http.createServer(app);
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
-});
+})
 
-var io = require('socket.io').listen(server);
-
+//A new client is connected to the web socket
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+    socket.on('suggest', function (data) {
+        webSocketApi.suggest(data, socket);
+        return;
+    });
 });
