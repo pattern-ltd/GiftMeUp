@@ -6,7 +6,8 @@ define(["facebook", "services/module"], function (FB, services) {
         this.$http = $http;
 
         FB.init({
-            appId: '663501057037367',
+            //appId: '663501057037367',
+            appId: '706842222680086',
             status: true,
             cookie: true
         });

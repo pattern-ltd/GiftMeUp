@@ -13,9 +13,9 @@ var core = suggestionsCore.initialize(client, graph);
 exports.getFacebookFriends = function (req, res) {
     var token = req.query.token;
 
-    var query = "SELECT name, uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me())";
+    var url = "me/friends?fields=id,name,picture";
 
-    graph.fql(query, { access_token: token }, function (err, result) {
+    graph.get(url, { access_token: token }, function (err, result) {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result.data));
         return;

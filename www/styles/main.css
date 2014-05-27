@@ -1,15 +1,19 @@
 /* Space out content a bit */
+html {
+    padding: 0;
+    margin: 0;
+}
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+    background-image: url(../images/bg.png);
+    background-repeat: repeat;
+    padding: 0;
+    margin: 0;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 /* Custom page header */
@@ -31,10 +35,19 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
+.container {
+    
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
+  }
+
+  .wrapper {
+      margin: 0 200px 0 200px;
+      background-color: #ECECF4;
   }
 }
 .container-narrow > hr {
@@ -45,10 +58,29 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
+  padding: 0;  
+  background-image: url(../images/gifts.jpg);
+  height: 600px;
+
+  -webkit-box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
+-moz-box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
+box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
 }
 .jumbotron .btn {
   font-size: 21px;
   padding: 14px 24px;
+}
+
+.navigation {
+    height: 50px;
+    width: 100%;
+    background-color: #67AB65;
+}
+
+.gifts-logo {
+    width: 200px;
+    height: 100%;
+    background-color: #498A4D;
 }
 
 /* Supporting marketing content */
@@ -57,6 +89,23 @@ body {
 }
 .marketing p + h4 {
   margin-top: 28px;
+}
+
+.left-button {
+    width: 200px;
+    background-image: url(../images/bg.png);
+    background-repeat: repeat;
+    height: 600px;
+    position:absolute;
+}
+
+.right-button {
+    width: 200px;
+    background-image: url(../images/bg.png);
+    background-repeat: repeat;
+    height: 600px;
+    position:absolute;
+    right: 0;
 }
 
 /* Responsive: Portrait tablets and up */

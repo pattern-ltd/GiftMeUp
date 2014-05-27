@@ -17,3 +17,8 @@ node_modules
 www/bower_components
 
 .idea
+
+*.suo
+*.sln
+*.njsproj
+obj
