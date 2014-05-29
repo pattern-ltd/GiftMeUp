@@ -39,6 +39,15 @@ body {
     
 }
 
+.panel-default > .panel-heading {
+    background-color: #C9E7C9;
+    color: black;
+}
+
+.panel-group {
+    margin-top: 5px;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {
