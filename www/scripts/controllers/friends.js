@@ -1,6 +1,6 @@
 define(["controllers/module"], function (controllers) {
-    controllers.controller("FriendsCtrl", ["$scope", "$state", "FacebookService",
-        function ($scope, $state, facebookService) {
+    controllers.controller("FriendsCtrl", ["$scope", "$rootScope", "$state", "$stateParams", "FacebookService", "WebSocketService",
+        function ($scope, $rootScope, $state, $stateParams, facebookService, webSocketService) {
             $scope.login = function () {
                 facebookService.login()
                     .then(function () {
@@ -34,7 +34,22 @@ define(["controllers/module"], function (controllers) {
             }
 
             $scope.getFriendSuggestions = function (friend) {
-                $state.go("suggestions", {id: friend.id});
+                $scope.selectedFriendId = friend.id;
+                $scope.nextStep();
+            }
+
+            $scope.suggest = function () {
+                facebookService.getAccessToken()
+                .then(function (token) {
+                    var data = {
+                        userId: $scope.selectedFriendId,
+                        interests: $scope.interests,
+                        maxPrice: $scope.maxPrice,
+                        token: token
+                    };
+
+                    webSocketService.send("suggest", data);
+                });
             }
         } ]);
 });

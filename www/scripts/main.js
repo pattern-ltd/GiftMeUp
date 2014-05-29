@@ -1,12 +1,12 @@
 require.config({
     paths: {
-        angular: "../bower_components/angular/angular",
-        uiRouter: "../vendor/angular-ui-router/angular-ui-router",
-        ngRoute: "../bower_components/angular-route/angular-route",
-        ngSanitize: "../bower_components/angular-sanitize/angular-sanitize",
-        ngCookies: "../bower_components/angular-cookies/angular-cookies",
-        jquery: "../bower_components/jquery/dist/jquery",
-        bootstrap: "../bower_components/bootstrap/dist/js/bootstrap",
+        angular: "../bower_components/angular/angular.min",
+        uiRouter: "../vendor/angular-ui-router/angular-ui-router.min",
+        ngRoute: "../bower_components/angular-route/angular-route.min",
+        ngSanitize: "../bower_components/angular-sanitize/angular-sanitize.min",
+        ngCookies: "../bower_components/angular-cookies/angular-cookies.min",
+        jquery: "../bower_components/jquery/dist/jquery.min",
+        bootstrap: "../bower_components/bootstrap/dist/js/bootstrap.min",
         domReady: "../bower_components/requirejs-domready/domReady",
         facebook: "//connect.facebook.net/en_US/all",
         io: "/socket.io/socket.io"

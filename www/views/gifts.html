@@ -1,0 +1,64 @@
+<div ng-controller="FriendsCtrl">
+    <accordion>
+        <collapsible title="Persona">
+            <button ng-click="login()">Log in</button>
+            <button ng-click="logout()">Log out</button>
+
+            <p>Search for your friend or find it in the list</p>
+
+            <input type="text" ng-model="searchFriendsKeywords"/>
+            <button ng-click="searchFriends()">Search</button>
+
+            <ul>
+                <li ng-repeat="friend in friends">
+                    <a href="#" ng-click="getFriendSuggestions(friend)">
+                        <img src="{{friend.picture.data.url}}" alt="{{friend.name}}"/>
+                        <span>{{friend.name}}</span>
+                    </a>
+                </li>
+            </ul>
+    
+            <button ng-click="getFriends()">Get friends</button>
+        </collapsible>
+
+
+        <collapsible title="Interests">
+            <span>Intetersts:</span>
+            <input ng-model="interests" type="text" /></br>
+
+            <span>Max price</span>
+            <input ng-model="maxPrice" type="text" />
+    
+        </collapsible>
+    </accordion>
+
+    <a class="btn btn-lg btn-success" ng-click="suggest()" href="#">Suggest!</a>
+</div>
+
+<div ng-controller="SuggestionsCtrl">
+    <ul>
+        <li ng-repeat="suggestion in suggestions">
+            <div ng-show="suggestion.ItemAttributes">
+                <h3>{{suggestion.ItemAttributes.Title}}</h3>
+                <img src="{{suggestion.MediumImage.URL}}" />
+                <div>{{suggestion.EditorialReviews.EditorialReview.Content}}</div>
+
+                <a target="_blank" href="{{suggestion.DetailPageURL}}" >Details</a>
+                <button ng-click="suggestAnother()">Another</button>
+                <button ng-click="similar(suggestion)">Similar</button>
+            </div>
+        </li>
+    </ul>
+
+    <ul>
+        <li ng-repeat="item in similarItems">
+            <div ng-show="item.ItemAttributes">
+                <h3>{{item.ItemAttributes.Title}}</h3>
+                <img src="{{item.MediumImage.URL}}" />
+                <div>{{item.EditorialReviews.EditorialReview.Content}}</div>
+
+                <a target="_blank" href="{{item.DetailPageURL}}" >Details</a>
+            </div>
+        </li>
+    </ul>
+</div>
