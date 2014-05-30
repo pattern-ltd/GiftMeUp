@@ -84,8 +84,8 @@ body {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   padding: 0;  
-  background-image: url(../images/gifts.jpg);
-  height: 600px;
+  /*background-image: url(../images/gifts.jpg);*/
+  height: auto;
 
   -webkit-box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
 -moz-box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
@@ -122,17 +122,30 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
     width: 200px;
     background-image: url(../images/bg.png);
     background-repeat: repeat;
-    height: 600px;
+    height: 100%;
     position:absolute;
+    top: 0;
+    left: 0;
 }
 
 .right-button {
     width: 200px;
     background-image: url(../images/bg.png);
     background-repeat: repeat;
-    height: 600px;
+    height: 100%;
     position:absolute;
+    top: 0;
     right: 0;
+}
+
+.left-icon {
+    position: absolute;
+    top: 50%
+}
+
+.right-icon {
+    position: absolute;
+    top: 50%
 }
 
 /* Responsive: Portrait tablets and up */
