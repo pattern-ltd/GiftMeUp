@@ -39,6 +39,10 @@ body {
     
 }
 
+.carousel-caption {
+    font-size: 42px;
+}
+
 .panel-default > .panel-heading {
     background-color: #C9E7C9;
     color: black;
@@ -108,6 +112,14 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
     background-color: #498A4D;
     display: inline;
     float: left
+}
+
+.gifts-logo h1 {
+    font-size: 36px;
+    color: white;
+    text-align: center;
+    font-family: "FaktSlabPro-Medium","Roboto Condensed",Arial,Helvetica,sans-serif;
+    margin: 5px 0 0 0;
 }
 
 /* Supporting marketing content */
