@@ -17,14 +17,37 @@
             </ul>
         </collapsible>
 
+        <collapsible title="Occasion">
+            <select ng-model="occasion">
+                <option value="birthday" selected>Birthday</option>
+                <option value="christmas">Christams and New Year</option>
+                <option value="wedding">Wedding</option>
+                <option value="valentine">St. Valentine</option>
+                <option value="other">Other</option>
+                <option value="no">No occasion</option>
+            </select></br>
+
+            <a ng-click="nextStep()">Next</a>
+        </collapsible>
+
+        <collapsible title="Age">
+            <span>Тhe approximate age of the person:</span>
+            <input ng-model="age" type="text" /></br>
+
+            <a ng-click="nextStep()">Next</a>    
+        </collapsible>
 
         <collapsible title="Interests">
-            <span>Intetersts:</span>
+            <span>Things that the person may like.</span></br>
+            <span>Separate them with commas.</span>
             <input ng-model="interests" type="text" /></br>
+            
+            <a ng-click="nextStep()">Next</a>  
+        </collapsible>
 
+        <collapsible title="Price range">
             <span>Max price</span>
-            <input ng-model="maxPrice" type="text" />
-    
+            <input ng-model="maxPrice" type="text" />    
         </collapsible>
     </accordion>
 

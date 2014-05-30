@@ -40,7 +40,7 @@ exports.suggest = function (data, socket) {
         if (recent) {
             client.searchItems({ SearchIndex: "Blended",
                 Keywords: recent.name,
-                MaximumPrice: maxPrice,
+                //MaximumPrice: maxPrice, //cannot have max price when the index is Blended
                 ResponseGroup: "Small,Images,EditorialReview"
             }, function (err, result) {
                 return result.Items;
@@ -60,7 +60,7 @@ exports.suggest = function (data, socket) {
         //search for new ones
         client.searchItems({ SearchIndex: "Blended",
             Keywords: interests,
-            MaximumPrice: maxPrice,
+            //MaximumPrice: maxPrice, //cannot have max price when the index is Blended
             ResponseGroup: "Small,Images,EditorialReview"
         }, function (err, result) {
             if (result.Items.Item) {
