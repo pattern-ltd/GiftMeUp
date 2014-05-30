@@ -176,7 +176,7 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
 
 .friends-container {
     max-height: 500px;
-    overflow: scroll;
+    overflow-y: scroll;
     list-style-type: none;
     margin-top: 15px;
 }
@@ -190,6 +190,26 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
 }
 
 .show-friends-button {
+    float: right;
+}
+
+.suggested-items-container {
+    list-style-type: none;
+    padding: 0;
+}
+
+.suggested-item {
+    margin-bottom: 30px;
+    min-height: 190px;
+}
+
+.suggested-item img {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.similar-button {
     float: right;
 }
 

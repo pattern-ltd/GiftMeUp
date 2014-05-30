@@ -138,7 +138,7 @@ define(["facebook", "services/module"], function (FB, services) {
         similar: function (itemId) {
             var delay = this.$q.defer();
 
-            self.$http({ method: "get",
+            this.$http({ method: "get",
                 url: "/api/amazon/similar",
                 params: {
                     itemId: itemId

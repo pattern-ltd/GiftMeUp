@@ -32,28 +32,17 @@
 </div>
 
 <div ng-controller="SuggestionsCtrl">
-    <ul>
+    <ul class="suggested-items-container">
         <li ng-repeat="suggestion in suggestions">
-            <div ng-show="suggestion.ItemAttributes">
-                <h3>{{suggestion.ItemAttributes.Title}}</h3>
-                <img src="{{suggestion.MediumImage.URL}}" />
+            <div ng-show="suggestion.ItemAttributes" class="suggested-item">
+                <a target="_blank" href="{{suggestion.DetailPageURL}}" >
+                    <h4>{{suggestion.ItemAttributes.Title}}</h4>
+                    <img src="{{suggestion.MediumImage.URL}}" />
+                </a>
+
+                <button ng-click="similar(suggestion)" class="similar-button">Similar</button>
+
                 <div>{{suggestion.EditorialReviews.EditorialReview.Content}}</div>
-
-                <a target="_blank" href="{{suggestion.DetailPageURL}}" >Details</a>
-                <button ng-click="suggestAnother()">Another</button>
-                <button ng-click="similar(suggestion)">Similar</button>
-            </div>
-        </li>
-    </ul>
-
-    <ul>
-        <li ng-repeat="item in similarItems">
-            <div ng-show="item.ItemAttributes">
-                <h3>{{item.ItemAttributes.Title}}</h3>
-                <img src="{{item.MediumImage.URL}}" />
-                <div>{{item.EditorialReviews.EditorialReview.Content}}</div>
-
-                <a target="_blank" href="{{item.DetailPageURL}}" >Details</a>
             </div>
         </li>
     </ul>

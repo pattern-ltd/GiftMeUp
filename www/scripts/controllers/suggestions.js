@@ -10,7 +10,7 @@ define(["controllers/module"], function (controllers) {
             $scope.similar = function (item) {
                 facebookService.similar(item.ASIN)
                 .then(function (result) {
-                    $scope.similarItems = result;
+                    $scope.suggestions = result;
                 });
             }
         } ]);
