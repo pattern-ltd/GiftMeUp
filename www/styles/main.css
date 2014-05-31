@@ -234,6 +234,7 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
 
 .next-button {
     cursor: pointer;
+    margin-top:  10px;
 }
 
 .panel-default > .active-collapsible {
