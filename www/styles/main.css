@@ -32,7 +32,6 @@ body {
 .footer {
   padding-top: 19px;
   color: #777;
-  border-top: 1px solid #e5e5e5;
 }
 
 .container {
@@ -231,6 +230,19 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
 .loader-overlay img {
     margin:10px 0 10px 0;
     z-index: 2000;
+}
+
+.next-button {
+    cursor: pointer;
+}
+
+.panel-default > .active-collapsible {
+    cursor: pointer;
+}
+
+.panel-default > .inactive-collapsible {
+    background-color: #E3F3E3;
+    color: #6C6C6C;
 }
 
 /* Responsive: Portrait tablets and up */

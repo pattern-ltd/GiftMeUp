@@ -11,6 +11,8 @@ exports.suggest = function (data, socket) {
     var userId = data.userId;
     var interests = encodeURIComponent(data.interests);
     var maxPrice = data.maxPrice;
+    var age = data.age;
+    var occasion = data.occasion;
     var token = data.token;
 
     Q.fcall(function () {

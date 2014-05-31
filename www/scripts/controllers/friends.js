@@ -37,15 +37,22 @@ define(["controllers/module"], function (controllers) {
                         userId: $scope.selectedFriendId,
                         interests: $scope.interests,
                         maxPrice: $scope.maxPrice,
+                        age: $scope.age,
+                        occasion: $scope.occasion,
                         token: token
                     };
 
                     webSocketService.send("suggest", data);
+                    $rootScope.$emit("suggestingStart");
                 });
             }
 
             $rootScope.$on("loggedIn", function () {
                 $scope.getFriends();
             });
+
+            $scope.occasion = "birthday";
+            $scope.age = 25;
+            $scope.maxPrice = 300;
         } ]);
 });

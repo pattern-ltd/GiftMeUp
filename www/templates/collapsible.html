@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
+    <div ng-class="{'active-collapsible': active, 'inactive-collapsible': !active, 'panel-heading': true}">
         <h4 class="panel-title">
             <a ng-click="toggle()">
                 {{title}}
