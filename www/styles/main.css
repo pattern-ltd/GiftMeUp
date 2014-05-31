@@ -225,6 +225,14 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
     float: right;
 }
 
+.loader-overlay {
+    text-align: center;
+}
+.loader-overlay img {
+    margin:10px 0 10px 0;
+    z-index: 2000;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
