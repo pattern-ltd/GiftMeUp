@@ -16,5 +16,3 @@ define(["angular", "controllers/loader", "services/loader", "directives/loader",
 
         return module;
     });
-
-

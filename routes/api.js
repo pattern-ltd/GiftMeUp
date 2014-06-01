@@ -54,7 +54,7 @@ exports.similarAmazonItems = function (req, res) {
         ResponseGroup: "Small,Images,EditorialReview"
     }, function (err, result) {
         if (result.Items.Item) {
-            var items = result.Items.Item.slice(0, 10);
+            var items = result.Items.Item.slice(0, 15);
         }
 
         res.setHeader('Content-Type', 'application/json');
