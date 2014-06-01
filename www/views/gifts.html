@@ -87,7 +87,7 @@
 
                 <button ng-click="similar(suggestion)" class="similar-button">Similar</button>
 
-                <div>{{suggestion.EditorialReviews.EditorialReview.Content}}</div>
+                <div ng-bind-html="suggestion.EditorialReviews.EditorialReview.Content"></div>
             </div>
         </li>
     </ul>
