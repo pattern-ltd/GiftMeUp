@@ -110,15 +110,19 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
     height: 100%;
     background-color: #498A4D;
     display: inline;
-    float: left
+    float: left;    
 }
 
 .gifts-logo h1 {
-    font-size: 36px;
+    font-size: 24px;
     color: white;
-    text-align: center;
     font-family: "FaktSlabPro-Medium","Roboto Condensed",Arial,Helvetica,sans-serif;
-    margin: 5px 0 0 0;
+    margin: 10px 25px 0 0;
+    float: right;
+}
+
+.gifts-logo img {
+    height: 50px;
 }
 
 /* Supporting marketing content */
