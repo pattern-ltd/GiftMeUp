@@ -246,6 +246,14 @@ box-shadow: 1px 17px 15px 1px rgba(122,120,122,0.37);
     color: #6C6C6C;
 }
 
+.panel-default > .inactive-collapsible:hover {
+    text-decoration: none;
+}
+
+.tab-content {
+    margin-top: 10px;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */

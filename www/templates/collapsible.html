@@ -1,9 +1,9 @@
 <div class="panel panel-default">
-    <div ng-class="{'active-collapsible': active, 'inactive-collapsible': !active, 'panel-heading': true}">
+    <div ng-click="toggle()" ng-class="{'active-collapsible': active, 'inactive-collapsible': !active, 'panel-heading': true}">
         <h4 class="panel-title">
-            <a ng-click="toggle()">
+            <span>
                 {{title}}
-            </a>
+            </span>
         </h4>
     </div>
     <div class="panel-collapse collapse">

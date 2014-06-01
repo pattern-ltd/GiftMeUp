@@ -6,14 +6,25 @@
             </div>
 
             <div ng-hide="loadingFriends">
-                <p>Find your friend in the list or search for a profile in Facebook</p>
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#friends" data-toggle="tab">Friends</a></li>
+                  <li><a href="#other-people" data-toggle="tab">Other people</a></li>
+                </ul>
 
-                <input type="text" ng-model="searchFriendsKeywords"/>
-                <button ng-click="searchFriends()">Search</button>
-                <button ng-click="getFriends()" class="show-friends-button">Show my friends</button>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="friends">
+                        <input type="text" ng-model="narrowFriends" placeholder="Narrow by typing"/>
+                        <button ng-click="getFriends()" class="show-friends-button">Show my friends</button>
+                    </div>
 
+                    <div class="tab-pane" id="other-people">
+                        <input type="text" ng-model="searchFriendsKeywords"/>
+
+                        <button ng-click="searchFriends()">Search</button>
+                    </div>
+                </div>
                 <ul class="friends-container">
-                    <li ng-repeat="friend in friends">
+                    <li ng-repeat="friend in friends | filter: {name: narrowFriends}">
                         <a href="#" ng-click="getFriendSuggestions(friend)">
                             <img src="{{friend.picture.data.url}}" alt="{{friend.name}}"/>
                             <span>{{friend.name}}</span>
@@ -21,6 +32,7 @@
                     </li>
                 </ul>
                 <p ng-show="friends.length===0">No people found.</p>
+                
             </div>
         </collapsible>
 
